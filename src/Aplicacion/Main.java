@@ -1,23 +1,26 @@
 package Aplicacion;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import BD.Conexion;
+public class Main extends Application{
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			Parent root = FXMLLoader.load(getClass().getResource("/Vista/LoginView.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			System.out.println("Hay errores");
+			e.printStackTrace();
+		}
+	}
 
-public class Main {
-    public static void main(String[] args) {
-        Conexion conexion = Conexion.getInstacen();
-        Connection conn;
-
-        try {
-            conn = conexion.getConetion();
-            System.out.println("Estado de la conexión: " + (conn != null ? "Conectado" : "No conectado"));
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
