@@ -1,8 +1,5 @@
 package BD;
 
-//import java.sql.Connection;
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,51 +10,43 @@ public class Conexion {
 
     private static Conexion Pfinal;
 
+    private static Connection conn;
+
     public Conexion() {
     }
 
-    public static Conexion getInstacen() {
+    public static Conexion getInstance() {
         if (Pfinal == null) {
             Pfinal = new Conexion();
         }
         return Pfinal;
     }
 
-    private static Connection conn;
-
-    public static Connection getConetion() throws ClassNotFoundException, SQLException {
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
         if (conn == null) {
-            System.out.println("Cargando el driver de Oracle...");
             Class.forName("oracle.jdbc.OracleDriver");
 
             String url = "jdbc:oracle:thin:@localhost:1521:XE";
             String user = "Pfinal";
             String password = "root";
-
-            System.out.println("URL: " + url);
-            System.out.println("Usuario: " + user);
             // No imprimir la contraseña por razones de seguridad en un entorno de producción
 
             if (user == null || user.isEmpty() || password == null || password.isEmpty()) {
                 throw new SQLException("Usuario o contraseña no pueden ser nulos o vacíos.");
             }
 
-            System.out.println("Intentando conectar a la base de datos...");
-            //conn = DriverManager.getConnection(url, user, password);
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Conexión exitosa.");
         }
         return conn;
     }
 
     public void realizarConsulta(String consulta) {
-		Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
 
         try {
             // Obtener la conexión desde la clase Conexion
-            conn = Conexion.getInstacen().getConetion();
+            Connection conn = Conexion.getInstance().getConnection();
             // Crear una declaración
             stmt = conn.createStatement();
             // Ejecutar la consulta
@@ -86,14 +75,25 @@ public class Conexion {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
-            // Cerrar ResultSet, Statement y Connection en el orden inverso de su creación
+            // Cerrar ResultSet y Statement, pero no Connection
             try {
                 if (rs != null) rs.close();
                 if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
-	}
+    }
+
+    // Método para cerrar la conexión cuando la aplicación termina
+    public static void cerrarConexion() {
+        if (conn != null) {
+            try {
+                conn.close();
+                conn = null; // Asegurarse de que la conexión esté completamente cerrada
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
