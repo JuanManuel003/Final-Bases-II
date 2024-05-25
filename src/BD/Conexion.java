@@ -1,5 +1,7 @@
 package BD;
 
+//import java.sql.Connection;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,12 +23,13 @@ public class Conexion {
         return Pfinal;
     }
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
+    public Connection getConetion() throws ClassNotFoundException, SQLException {
+
         if (conn == null) {
             Class.forName("oracle.jdbc.OracleDriver");
 
             String url = "jdbc:oracle:thin:@localhost:1521:XE";
-            String user = "Pfinal";
+            String user = "JOHAN";
             String password = "root";
 
             if (user == null || user.isEmpty() || password == null || password.isEmpty()) {
@@ -44,7 +47,7 @@ public class Conexion {
         ResultSet rs = null;
 
         try {
-            Connection conn = Conexion.getInstance().getConnection();
+            Connection conn = Conexion.getInstance().getConetion();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(consulta);
 
@@ -80,7 +83,7 @@ public class Conexion {
         Statement stmt = null;
 
         try {
-            Connection conn = Conexion.getInstance().getConnection();
+            Connection conn = Conexion.getInstance().getConetion();
             stmt = conn.createStatement();
             int affectedRows = stmt.executeUpdate(sql);
 
