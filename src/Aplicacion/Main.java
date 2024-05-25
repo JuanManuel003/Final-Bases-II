@@ -2,6 +2,8 @@ package Aplicacion;
 
 import java.io.IOException;
 
+import BD.Conexion;
+import Controlador.CrearExamenController;
 import Controlador.ListaExamenesController;
 import Controlador.LoginController;
 import Services.AdministradorService;
@@ -12,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import BD.Conexion;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -74,7 +75,23 @@ public class Main extends Application {
 	}
 	
 	public void showCrearExamen(String correo) {
-		
+		try{
+			// Carga del fxml de eleccion de modulo.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(getClass().getResource("/Vista/CrearExamen.fxml"));
+	        Parent root = loader.load();
+	        
+	        CrearExamenController controller = loader.getController();
+			controller.setMainApp(this, correo);
+			
+			Scene scene = new Scene(root);
+			this.primaryStage.setTitle("Examenes en linea");
+			this.primaryStage.setScene(scene);
+			this.primaryStage.show();
+    	} catch (IOException e) {
+    		System.out.println("Error al inicial la vista de crear examen");
+    		e.printStackTrace();
+    	}		
 		
 	}
 

@@ -9,13 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 
-import BD.Conexion;
-import javafx.event.ActionEvent;
-
-import javafx.scene.control.SplitMenuButton;
-
-import javafx.scene.control.PasswordField;
-
 
 public class LoginController {
 	private Main aplicacion;

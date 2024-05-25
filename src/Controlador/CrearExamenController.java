@@ -1,5 +1,6 @@
 package Controlador;
 
+import Aplicacion.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -37,5 +38,10 @@ public class CrearExamenController {
     void volver(ActionEvent event) {
 
     }
+
+	public void setMainApp(Main main, String correo) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

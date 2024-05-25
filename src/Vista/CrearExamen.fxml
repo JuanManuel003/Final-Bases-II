@@ -25,12 +25,12 @@
                   <Font name="Yu Gothic UI Semibold" size="24.0" />
                </font>
             </Text>
-            <Button layoutX="203.0" layoutY="503.0" mnemonicParsing="false" onAction="#Agregar" prefHeight="45.0" prefWidth="122.0" text="Agregar">
+            <Button layoutX="202.0" layoutY="505.0" mnemonicParsing="false" onAction="#Agregar" prefHeight="45.0" prefWidth="122.0" text="Agregar">
                <font>
                   <Font name="Yu Gothic UI Semibold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="419.0" layoutY="505.0" mnemonicParsing="false" onAction="#volver" text="Atras">
+            <Button layoutX="378.0" layoutY="505.0" mnemonicParsing="false" onAction="#volver" prefHeight="45.0" prefWidth="122.0" text="Atras">
                <font>
                   <Font name="Yu Gothic UI Semibold" size="12.0" />
                </font>
