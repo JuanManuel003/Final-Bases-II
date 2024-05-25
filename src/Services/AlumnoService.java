@@ -12,7 +12,7 @@ public class AlumnoService {
 	public static boolean ingresar(String correo, String password) {
 		boolean valido = false;
         String query = "SELECT * FROM alumno WHERE correo = ? AND password = ?";
-        try (Connection conn = Conexion.getInstacen().getConetion();
+        try (Connection conn = Conexion.getInstance().getConetion();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, correo);
