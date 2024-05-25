@@ -1,7 +1,5 @@
 package BD;
 
-//import java.sql.Connection;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,16 +13,16 @@ public class Conexion {
 
     public Conexion() {}
 
-    public static Conexion getInstance() {
+    public static Conexion getInstance() throws SQLException, ClassNotFoundException {
         if (Pfinal == null) {
             Pfinal = new Conexion();
         }
         return Pfinal;
     }
 
-    public Connection getConetion() throws ClassNotFoundException, SQLException {
+    public Connection getConnection() throws ClassNotFoundException, SQLException {
 
-        if (conn == null) {
+        if (conn == null || conn.isClosed()) {
             Class.forName("oracle.jdbc.OracleDriver");
 
             String url = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -46,7 +44,7 @@ public class Conexion {
         ResultSet rs = null;
 
         try {
-            Connection conn = Conexion.getInstance().getConetion();
+            Connection conn = Conexion.getInstance().getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(consulta);
 
@@ -82,7 +80,7 @@ public class Conexion {
         Statement stmt = null;
 
         try {
-            Connection conn = Conexion.getInstance().getConetion();
+            Connection conn = Conexion.getInstance().getConnection();
             stmt = conn.createStatement();
             int affectedRows = stmt.executeUpdate(sql);
 
@@ -100,7 +98,7 @@ public class Conexion {
 
     public static void cerrarConexion() {
         if (conn != null) {
-            try {
+            try {	
                 conn.close();
                 conn = null;
             } catch (SQLException ex) {

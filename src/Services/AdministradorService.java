@@ -12,7 +12,7 @@ public class AdministradorService {
 	public static boolean ingresar(String correo, String password) {
 		boolean valido = false;
         String query = "SELECT * FROM administrador WHERE correo = ? AND password = ?";
-        try (Connection conn = Conexion.getInstance().getConetion();
+        try (Connection conn = Conexion.getInstance().getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, correo);

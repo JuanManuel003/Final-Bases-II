@@ -5,16 +5,16 @@ public class Grupo {
 	private int id;
 	private String nombre;
 	private int numGrupo;
-	private int idGrupo;
+	private int idCurso;
 
 	public Grupo(){}
 
-	public Grupo(int id, String nombre, int numGrupo, int idGrupo) {
+	public Grupo(int id, String nombre, int numGrupo, int idCurso) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.numGrupo = numGrupo;
-		this.idGrupo = idGrupo;
+		this.idCurso = idCurso;
 	}
 
 	public int getId() {
@@ -35,10 +35,10 @@ public class Grupo {
 	public void setNumGrupo(int numGrupo) {
 		this.numGrupo = numGrupo;
 	}
-	public int getIdGrupo() {
-		return idGrupo;
+	public int getIdCurso() {
+		return idCurso;
 	}
-	public void setIdGrupo(int idGrupo) {
-		this.idGrupo = idGrupo;
+	public void setIdCurso(int idCurso) {
+		this.idCurso = idCurso;
 	}
 }

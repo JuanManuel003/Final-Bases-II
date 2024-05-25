@@ -1,30 +1,28 @@
 package Aplicacion;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import BD.Conexion;
 import Controlador.CrearExamenController;
 import Controlador.ListaExamenesController;
 import Controlador.LoginController;
+import Modelo.Docente;
+import Modelo.Grupo;
+import Modelo.Tema;
 import Services.AdministradorService;
 import Services.AlumnoService;
+import Services.CrearExamenService;
 import Services.DocenteService;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class Main extends Application {
-    public static void main(String[] args) {
-        // Agregar un shutdown hook para cerrar la conexión cuando la aplicación termine
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            Conexion.cerrarConexion();
-            System.out.println("conexion cerrada");
-        }));
-
-        launch(args);
-    }
 	
 	private Stage primaryStage;
 
@@ -52,6 +50,16 @@ public class Main extends Application {
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
+	
+	public static void main(String[] args) {
+		// Agregar un shutdown hook para cerrar la conexión cuando la aplicación termine
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Conexion.cerrarConexion();
+            System.out.println("conexion cerrada");
+        }));
+		
+		launch(args);
+    }
 	
 	public void showListaExamenes(String correo) {
 		try{
@@ -105,6 +113,18 @@ public class Main extends Application {
 
 	public boolean ingresarAdmin(String correo, String password) {
 		return AdministradorService.ingresar(correo, password);
+	}
+
+	public ObservableList<Tema> cargarTemasExamen() {
+		return CrearExamenService.obtenerTemas();
+	}
+
+	public ObservableList<Grupo> cargarGrupos() {
+		return CrearExamenService.obtenerGrupos();
+	}
+
+	public Docente obtenerDocente(String correo) {
+		return CrearExamenService.obtenerDocente(correo);
 	}
 
 }

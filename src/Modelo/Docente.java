@@ -5,14 +5,14 @@ public class Docente {
 	private int id;
 	private String nombre;
 	private String apellido;
-	private int cedula;
-	private int telefono;
+	private String cedula;
+	private String telefono;
 	private String correo;
 	private String contrasena;
 
 	public Docente(){}
 
-	public Docente(int id, String nombre, String apellido, int cedula, int telefono, String correo, String contrasena) {
+	public Docente(int id, String nombre, String apellido, String cedula, String telefono, String correo, String contrasena) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -41,16 +41,16 @@ public class Docente {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public int getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
-	public void setCedula(int cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 	public String getCorreo() {
