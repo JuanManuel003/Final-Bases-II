@@ -2,7 +2,6 @@ package BD;
 
 //import java.sql.Connection;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,13 +24,13 @@ public class Conexion {
 
     private static Connection conn;
 
-    public static Connection getConetion() throws ClassNotFoundException, SQLException {
+    public Connection getConetion() throws ClassNotFoundException, SQLException {
         if (conn == null) {
             System.out.println("Cargando el driver de Oracle...");
             Class.forName("oracle.jdbc.OracleDriver");
 
             String url = "jdbc:oracle:thin:@localhost:1521:XE";
-            String user = "Pfinal";
+            String user = "JOHAN";
             String password = "root";
 
             System.out.println("URL: " + url);

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="390.0" prefWidth="824.0" stylesheets="@css/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.ListaExamenesController">
+<AnchorPane prefHeight="390.0" prefWidth="824.0" stylesheets="" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.ListaExamenesController">
    <children>
       <ImageView fitHeight="390.0" fitWidth="824.0" pickOnBounds="true">
          <image>
@@ -30,7 +30,7 @@
                   <Font name="Yu Gothic UI Semibold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="398.0" layoutY="288.0" mnemonicParsing="false" onAction="#Salir" text="Salir">
+            <Button layoutX="398.0" layoutY="288.0" mnemonicParsing="false" onAction="#Salir" prefHeight="45.0" prefWidth="122.0" text="Salir">
                <font>
                   <Font name="Yu Gothic UI Semibold" size="12.0" />
                </font>
