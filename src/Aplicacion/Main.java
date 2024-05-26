@@ -1,7 +1,7 @@
 package Aplicacion;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.sql.Timestamp;
 
 import BD.Conexion;
 import Controlador.CrearExamenController;
@@ -20,7 +20,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class Main extends Application {
 	
@@ -126,5 +125,21 @@ public class Main extends Application {
 	public Docente obtenerDocente(String correo) {
 		return CrearExamenService.obtenerDocente(correo);
 	}
+
+	public void guardarConfig(int numPreguntas, String intervaloTiempo, int peso, int umbral, Timestamp fechaPresentacion, int numPreguntasBanco) {
+		CrearExamenService.guardarConfig(numPreguntas, intervaloTiempo, peso, umbral, fechaPresentacion, numPreguntasBanco);
+		
+	}
+
+	public int obtenerIdconfig() {
+		return CrearExamenService.obtenerIdConfig();
+	}
+
+	public void CrearExamen(String nombreExamen, String descripcion, int idTemaExamen, int idGrupo, int idDocente,
+			int idConfig, int idGrupo2) {
+		CrearExamenService.crearExamen(nombreExamen, descripcion, idTemaExamen, idDocente, idConfig, idGrupo);
+		
+	}
+
 
 }
