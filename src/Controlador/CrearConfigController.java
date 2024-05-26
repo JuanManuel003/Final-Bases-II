@@ -1,6 +1,5 @@
 package Controlador;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,13 +10,8 @@ import javax.swing.JOptionPane;
 import Aplicacion.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class CrearConfigController {
 	
@@ -69,7 +63,7 @@ public class CrearConfigController {
             aplicacion.guardarConfig(5,intervaloTiempo, peso, umbral, fechaPresentacion, 0);
             
             //volver a la interfaz de crear examen luego de crear la configuracion
-            VolverCrearExamen(event);
+            aplicacion.VolverCrearExamen(event, correo);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             // Manejo de error en caso de que los valores de hora o minutos no sean válidos
@@ -79,7 +73,7 @@ public class CrearConfigController {
         }
 	}
 
-	private void VolverCrearExamen(ActionEvent event) {
+	/*private void VolverCrearExamen(ActionEvent event) {
 		try {
 	        // Cargar la vista del login desde el archivo FXML
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/CrearExamen.fxml"));
@@ -101,7 +95,7 @@ public class CrearConfigController {
 	        e.printStackTrace();
 	    }
 		
-	}
+	}*/
 
 	public void setMainApp(Main aplicacion, String correo) {
 		this.aplicacion = aplicacion;

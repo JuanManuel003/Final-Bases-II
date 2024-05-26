@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 
 import javax.swing.JOptionPane;
@@ -136,10 +137,49 @@ public class CrearExamenService {
 		return ultimoId;
 	}
 
-	public static void crearExamen(String nombreExamen, String descripcion, int idTemaExamen, int idDocente,
-			int idConfig, int idGrupo) {
-		// TODO Auto-generated method stub
-		
+	public static int crearExamen(String nombreExamen, String descripcion, int idTemaExamen, int idDocente,
+	        int idConfig, int idGrupo) {
+
+	    // La consulta SQL para obtener el último ID de la tabla examen
+	    String getLastIdQuery = "SELECT COALESCE(MAX(id), 0) FROM examen";
+
+	    // La consulta SQL para insertar un nuevo examen
+	    String insertQuery = "INSERT INTO examen (id, nombre, descripcion, id_tema_examen, id_docente, id_configuracion, grupo_id, estado_examen) "
+	            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+	    // Variable para almacenar el ID generado
+	    int newIdExamen = -1;
+
+	    // Establecer la conexión y ejecutar la consulta
+	    try (Connection conn = Conexion.getInstance().getConnection();
+	         Statement stmt = conn.createStatement();
+	         ResultSet rs = stmt.executeQuery(getLastIdQuery);
+	         PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+
+	        // Obtener el último ID de la tabla examen y sumarle 1
+	        if (rs.next()) {
+	            newIdExamen = rs.getInt(1) + 1;
+	        }
+
+	        // Asignar valores a los parámetros del PreparedStatement
+	        pstmt.setInt(1, newIdExamen);
+	        pstmt.setString(2, nombreExamen);
+	        pstmt.setString(3, descripcion);
+	        pstmt.setInt(4, idTemaExamen);
+	        pstmt.setInt(5, idDocente);
+	        pstmt.setInt(6, idConfig);
+	        pstmt.setInt(7, idGrupo);
+	        pstmt.setInt(8, 0); // Estado examen por defecto: 0
+
+	        // Ejecutar la consulta
+	        pstmt.executeUpdate();
+
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+
+	    return newIdExamen;
 	}
+
 
 }
