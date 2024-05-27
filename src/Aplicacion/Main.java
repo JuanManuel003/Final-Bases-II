@@ -2,6 +2,7 @@ package Aplicacion;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import BD.Conexion;
 import Controlador.CrearConfigController;
@@ -9,7 +10,10 @@ import Controlador.CrearExamenController;
 import Controlador.CrearPreguntasController;
 import Controlador.ListaExamenesController;
 import Controlador.LoginController;
+import Controlador.RespuestaExamenController;
+import Modelo.Alumno;
 import Modelo.Docente;
+import Modelo.Examen;
 import Modelo.Grupo;
 import Modelo.PrivacidadPregunta;
 import Modelo.Tema;
@@ -18,6 +22,8 @@ import Services.AlumnoService;
 import Services.CrearExamenService;
 import Services.CrearPreguntaService;
 import Services.DocenteService;
+import Services.ListaExamenService;
+import Services.RespuestaExamenService;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -166,9 +172,30 @@ public class Main extends Application {
 			this.primaryStage.setScene(scene);
 			this.primaryStage.show();
 		} catch (IOException e) {
-			System.out.println("Error al inicial la vista de crear examen");
+			System.out.println("Error al inicial la vista de crear Preguntas");
 			e.printStackTrace();
 		}
+	}
+	
+	public void showResponderExamen(int idExamen, int idAlumno) {
+		try {
+			// Carga del fxml de eleccion de modulo.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/Vista/RespuestaExamen.fxml"));
+			Parent root = loader.load();
+
+			RespuestaExamenController respuestaExamen = loader.getController();
+			respuestaExamen.setMainApp(this, idExamen, idAlumno);
+
+			Scene scene = new Scene(root);
+			this.primaryStage.setTitle("Examenes en linea");
+			this.primaryStage.setScene(scene);
+			this.primaryStage.show();
+		} catch (IOException e) {
+			System.out.println("Error al inicial la vista de crear responder examen");
+			e.printStackTrace();
+		}
+		
 	}
 
 	public boolean ingresarAlumno(String correo, String password) {
@@ -234,6 +261,35 @@ public class Main extends Application {
 
 	public int obtenerNumeroPreguntasExamen(int idExamen) {
 		return CrearPreguntaService.obtenerNumPreguntas(idExamen);
+	}
+
+	public Alumno obtenerNombreAlumno(String correo) {
+		return AlumnoService.obtenerAlumno(correo);
+	}
+
+	public ObservableList<Examen> cargarExamenesAlumno(int idAlumno) {
+		return ListaExamenService.obtenerExamenes(idAlumno);
+	}
+
+	public String obtenerNombreExamen(int idExamen) {
+		return RespuestaExamenService.obtenerNombreExamen(idExamen);
+	}
+
+	public ArrayList<String> obtenerPreguntasExamen(int idExamen) {
+		return RespuestaExamenService.obtenerNombresPreguntas(idExamen);
+	}
+
+	public ArrayList<String> obtenerNombreRespuestas(String nombrePregunta) {
+		return RespuestaExamenService.obtenerNombresRespuestas(nombrePregunta);
+	}
+
+	public int obtenerIdPregunta(String nombrePregunta) {
+		return RespuestaExamenService.obtenerIdPregunta(nombrePregunta);
+	}
+
+	public void CrearRespuestasAlumno(int idAlumno, int idExamen, int idPregunta, String estado) {
+		RespuestaExamenService.crearRespuestaAlumno(idAlumno, idExamen, idPregunta, estado);
+		
 	}
 
 }

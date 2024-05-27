@@ -3,58 +3,69 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="792.0" prefWidth="728.0" stylesheets="" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RespuestaExamenController">
-   <children>
-      <ImageView fitHeight="792.0" fitWidth="728.0" pickOnBounds="true">
-         <image>	
-            <Image url="@images/fondo.jpg" />
-         </image>
-      </ImageView>
-      <Pane layoutX="-2.0" prefHeight="792.0" prefWidth="728.0">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RespuestaExamenController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1051.0" prefWidth="730.0">
          <children>
-            <Text layoutX="341.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Examen">
-               <font>
-                  <Font name="Yu Gothic UI Semibold" size="24.0" />
-               </font>
-            </Text>
-            <Button layoutX="219.0" layoutY="710.0" mnemonicParsing="false" onAction="#Enviar" prefHeight="45.0" prefWidth="122.0" text="Enviar">
-               <font>
-                  <Font name="Yu Gothic UI Semibold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="426.0" layoutY="712.0" mnemonicParsing="false" onAction="#Salir" text="Salir">
-               <font>
-                  <Font name="Yu Gothic UI Semibold" size="12.0" />
-               </font>
-            </Button>
-            <Label layoutX="47.0" layoutY="111.0" prefHeight="25.0" prefWidth="23.0" text="1. " />
-            <RadioButton fx:id="opcionAPre1" layoutX="47.0" layoutY="154.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" />
-            <TextField fx:id="txtNombreExamen" alignment="CENTER" editable="false" layoutX="210.0" layoutY="59.0" prefHeight="36.0" prefWidth="346.0" />
-            <TextField fx:id="txtPregunta1" editable="false" layoutX="74.0" layoutY="107.0" prefHeight="36.0" prefWidth="619.0" />
-            <RadioButton fx:id="opcionBPre1" layoutX="47.0" layoutY="193.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" />
-            <RadioButton fx:id="opcionCPre1" layoutX="47.0" layoutY="233.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" />
-            <Label layoutX="47.0" layoutY="283.0" prefHeight="25.0" prefWidth="23.0" text="2." />
-            <RadioButton fx:id="opcionAPre2" layoutX="47.0" layoutY="326.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" />
-            <TextField fx:id="txtPregunta2" editable="false" layoutX="74.0" layoutY="279.0" prefHeight="36.0" prefWidth="619.0" />
-            <RadioButton fx:id="opcionBPre2" layoutX="47.0" layoutY="365.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" />
-            <RadioButton fx:id="opcionCPre2" layoutX="47.0" layoutY="405.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" />
-            <Label layoutX="47.0" layoutY="449.0" prefHeight="25.0" prefWidth="23.0" text="3." />
-            <RadioButton fx:id="RbVerdaderoPre3" layoutX="47.0" layoutY="492.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" text="Verdadero" />
-            <TextField fx:id="txtPregunta3" editable="false" layoutX="74.0" layoutY="445.0" prefHeight="36.0" prefWidth="619.0" />
-            <RadioButton fx:id="RbFalsoPre3" layoutX="47.0" layoutY="531.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" text="Falso" />
-            <Label layoutX="47.0" layoutY="572.0" prefHeight="25.0" prefWidth="23.0" text="4." />
-            <RadioButton fx:id="RbVerdaderoPre4" layoutX="47.0" layoutY="615.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" text="Verdadero" />
-            <TextField fx:id="txtPregunta4" editable="false" layoutX="74.0" layoutY="568.0" prefHeight="36.0" prefWidth="619.0" />
-            <RadioButton fx:id="RbFalsoPre4" layoutX="47.0" layoutY="654.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="644.0" text="Falso" />
-         </children>
-      </Pane>
-   </children>
-</AnchorPane>
+            <Label layoutX="29.0" layoutY="98.0" prefHeight="25.0" prefWidth="23.0" text="1. " />
+            <TextField fx:id="txtNombreExamen" alignment="CENTER" editable="false" layoutX="236.0" layoutY="48.0" prefHeight="26.0" prefWidth="316.0" />
+            <Label alignment="CENTER" layoutX="355.0" layoutY="14.0" prefHeight="26.0" prefWidth="77.0" text="EXAMEN" />
+            <TextField fx:id="txtPregunta1" editable="false" layoutX="53.0" layoutY="97.0" prefHeight="26.0" prefWidth="627.0" />
+            <RadioButton fx:id="opc1Preg1" layoutX="55.0" layoutY="137.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="136.0" prefHeight="25.0" prefWidth="23.0" text="a" />
+            <RadioButton fx:id="opc2Preg1" layoutX="55.0" layoutY="169.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="168.0" prefHeight="25.0" prefWidth="23.0" text="b" />
+            <RadioButton fx:id="opc3Preg1" layoutX="55.0" layoutY="202.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="201.0" prefHeight="25.0" prefWidth="23.0" text="c" />
+            <RadioButton fx:id="opc4Preg1" layoutX="55.0" layoutY="234.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="233.0" prefHeight="25.0" prefWidth="23.0" text="d" />
+            <Label layoutX="29.0" layoutY="268.0" prefHeight="25.0" prefWidth="23.0" text="2. " />
+            <TextField fx:id="txtPregunta2" editable="false" layoutX="53.0" layoutY="267.0" prefHeight="26.0" prefWidth="627.0" />
+            <RadioButton fx:id="opc1Preg2" layoutX="55.0" layoutY="307.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="306.0" prefHeight="25.0" prefWidth="23.0" text="a" />
+            <RadioButton fx:id="opc2Preg2" layoutX="55.0" layoutY="339.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="338.0" prefHeight="25.0" prefWidth="23.0" text="b" />
+            <RadioButton fx:id="opc3Preg2" layoutX="55.0" layoutY="372.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="371.0" prefHeight="25.0" prefWidth="23.0" text="c" />
+            <RadioButton fx:id="opc4Preg2" layoutX="55.0" layoutY="404.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="403.0" prefHeight="25.0" prefWidth="23.0" text="d" />
+            <Label layoutX="29.0" layoutY="441.0" prefHeight="25.0" prefWidth="23.0" text="3. " />
+            <TextField fx:id="txtPregunta3" editable="false" layoutX="53.0" layoutY="440.0" prefHeight="26.0" prefWidth="627.0" />
+            <RadioButton fx:id="opc1Preg3" layoutX="55.0" layoutY="480.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="479.0" prefHeight="25.0" prefWidth="23.0" text="a" />
+            <RadioButton fx:id="opc2Preg3" layoutX="55.0" layoutY="512.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="511.0" prefHeight="25.0" prefWidth="23.0" text="b" />
+            <RadioButton fx:id="opc3Preg3" layoutX="55.0" layoutY="545.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="544.0" prefHeight="25.0" prefWidth="23.0" text="c" />
+            <RadioButton fx:id="opc4Preg3" layoutX="55.0" layoutY="577.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="576.0" prefHeight="25.0" prefWidth="23.0" text="d" />
+            <Label layoutX="29.0" layoutY="614.0" prefHeight="25.0" prefWidth="23.0" text="4. " />
+            <TextField fx:id="txtPregunta4" editable="false" layoutX="53.0" layoutY="613.0" prefHeight="26.0" prefWidth="627.0" />
+            <RadioButton fx:id="opc1Preg4" layoutX="55.0" layoutY="653.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="652.0" prefHeight="25.0" prefWidth="23.0" text="a" />
+            <RadioButton fx:id="opc2Preg4" layoutX="55.0" layoutY="685.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="684.0" prefHeight="25.0" prefWidth="23.0" text="b" />
+            <RadioButton fx:id="opc3Preg4" layoutX="55.0" layoutY="718.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="717.0" prefHeight="25.0" prefWidth="23.0" text="c" />
+            <RadioButton fx:id="opc4Preg4" layoutX="55.0" layoutY="750.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="749.0" prefHeight="25.0" prefWidth="23.0" text="d" />
+            <Label layoutX="29.0" layoutY="788.0" prefHeight="25.0" prefWidth="23.0" text="5. " />
+            <TextField fx:id="txtPregunta5" editable="false" layoutX="53.0" layoutY="787.0" prefHeight="26.0" prefWidth="627.0" />
+            <RadioButton fx:id="opc1Preg5" layoutX="55.0" layoutY="827.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="826.0" prefHeight="25.0" prefWidth="23.0" text="a" />
+            <RadioButton fx:id="opc2Preg5" layoutX="55.0" layoutY="859.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="858.0" prefHeight="25.0" prefWidth="23.0" text="b" />
+            <RadioButton fx:id="opc3Preg5" layoutX="55.0" layoutY="892.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="891.0" prefHeight="25.0" prefWidth="23.0" text="c" />
+            <RadioButton fx:id="opc4Preg5" layoutX="55.0" layoutY="924.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="626.0" />
+            <Label layoutX="29.0" layoutY="923.0" prefHeight="25.0" prefWidth="23.0" text="d" />
+            <Button layoutX="250.0" layoutY="979.0" mnemonicParsing="false" onAction="#Enviar" prefHeight="26.0" prefWidth="78.0" text="Enviar" />
+            <Button layoutX="408.0" layoutY="979.0" mnemonicParsing="false" onAction="#Volver" prefHeight="26.0" prefWidth="78.0" text="Volver" />
+            
+         </children></AnchorPane>
+  </content>
+</ScrollPane>

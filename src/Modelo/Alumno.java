@@ -5,9 +5,9 @@ public class Alumno {
 	private int id;
 	private String nombre;
 	private String apellido;
-	private int numIdentificacion;
+	private String numIdentificacion;
 	private String direccion;
-	private int telefono;
+	private String telefono;
 	private String correo;
 	private String contrasena;
 	private int idGrupo;
@@ -15,7 +15,7 @@ public class Alumno {
 	public Alumno() {
 	}
 
-	public Alumno(int id, String nombre, String apellido, int numIdentificacion, String direccion, int telefono,
+	public Alumno(int id, String nombre, String apellido, String numIdentificacion, String direccion, String telefono,
 			String correo, String contrasena, int idGrupo) {
 		super();
 		this.id = id;
@@ -53,11 +53,11 @@ public class Alumno {
 		this.apellido = apellido;
 	}
 
-	public int getNumIdentificacion() {
+	public String getNumIdentificacion() {
 		return numIdentificacion;
 	}
 
-	public void setNumIdentificacion(int numIdentificacion) {
+	public void setNumIdentificacion(String numIdentificacion) {
 		this.numIdentificacion = numIdentificacion;
 	}
 
@@ -69,11 +69,11 @@ public class Alumno {
 		this.direccion = direccion;
 	}
 
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 

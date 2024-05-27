@@ -11,7 +11,11 @@ public class Examen {
 	private int idConfiguracion;
 	private int idGrupo;
 
-	public Examen(){}
+	public Examen(int id, String nombre) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+	}
 
 	public Examen(int id, String nombre, String descripcion, int idTemaExamen, int idCategoria, int idAlumno,
 			int idConfiguracion, int idGrupo) {
