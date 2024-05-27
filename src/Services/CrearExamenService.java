@@ -244,7 +244,7 @@ public class CrearExamenService {
 			// Ejecutar la consulta
 			pstmt.executeUpdate();
 
-			JOptionPane.showMessageDialog(null, "Preguntas generadas exitosamente: " + pstmt.executeUpdate());
+			JOptionPane.showMessageDialog(null, "Preguntas generadas exitosamente");
 			System.out.println("Estado del examen actualizado");
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();

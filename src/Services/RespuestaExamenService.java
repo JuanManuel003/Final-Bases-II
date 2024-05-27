@@ -116,5 +116,26 @@ public class RespuestaExamenService {
             e.printStackTrace();
         }
     }
+	
+	public static void actualizarEstadoExamen(int idExamen) {
+		// Consulta SQL para actualizar el estado del examen
+		String updateQuery = "UPDATE examen SET estado_examen = ? WHERE id = ?";
+
+		// Establecer la conexión y ejecutar la consulta
+		try (Connection conn = Conexion.getInstance().getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+
+			// Asignar valores a los parámetros del PreparedStatement
+			pstmt.setInt(1, 1); // Nuevo estado del examen: 2
+			pstmt.setInt(2, idExamen);
+
+			// Ejecutar la consulta
+			pstmt.executeUpdate();
+
+			System.out.println("Estado del examen actualizado");
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -292,4 +292,9 @@ public class Main extends Application {
 		
 	}
 
+	public void cambiarEstadoExamen(int idExamen) {
+		RespuestaExamenService.actualizarEstadoExamen(idExamen);
+		
+	}
+
 }

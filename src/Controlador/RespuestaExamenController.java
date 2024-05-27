@@ -116,6 +116,9 @@ public class RespuestaExamenController {
 		procesarRespuestas(opc1Preg5, opc2Preg5, opc3Preg5, opc4Preg5, idPregunta5);
 
 		JOptionPane.showMessageDialog(null, "Respuestas guardadas");
+		
+		aplicacion.cambiarEstadoExamen(idExamen);
+		
 		VolverLogin(event);
 	}
 
