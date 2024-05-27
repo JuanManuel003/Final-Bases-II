@@ -17,6 +17,7 @@ import javafx.scene.control.ToggleGroup;
 public class CrearPreguntasController {
 
 	private Main aplicacion;
+	private String correo;
 
 	@FXML
 	private TextArea txtDescripcion;
@@ -47,6 +48,7 @@ public class CrearPreguntasController {
 	private int idDocente;
 	private ObservableList<PrivacidadPregunta> listaPrivacidad;
 	private int idPreguntaCreada;
+	private int idExamen;
 
 	// Event Listener on Button[#idBtnCrearPregunta].onAction
 	@FXML
@@ -122,6 +124,13 @@ public class CrearPreguntasController {
 			JOptionPane.showMessageDialog(null, "Primero debe crear la pregunta.");
 		}
 	}
+	
+	@FXML
+    void CrearPreguntaAleatoria(ActionEvent event) {
+		aplicacion.actualizarEstadoExamen(idExamen);
+		
+		aplicacion.showCrearExamen(correo);
+    }
 
 	private boolean camposRellenosRespuesta() {
 		if(this.txtOpcion1.getText().isEmpty()){
@@ -168,6 +177,12 @@ public class CrearPreguntasController {
         
         preguntaCreada = false;  // Resetear el estado de la pregunta creada
     }
+    
+    @FXML
+    void Volver(ActionEvent event) {
+    	//validar 5 preguntas
+    	aplicacion.showCrearExamen(correo);
+    }
 
 	@FXML
 	void initialize() {
@@ -180,10 +195,12 @@ public class CrearPreguntasController {
 		this.RbOpcion4.setToggleGroup(tg);
 	}
 
-	public void setMainApp(Main aplicacion, int idTemaExamen, int idDocente) {
+	public void setMainApp(Main aplicacion, int idTemaExamen, int idDocente, int idExamenGenerado, String correo2) {
 		this.aplicacion = aplicacion;
 		this.idTema = idTemaExamen;
 		this.idDocente = idDocente;
+		this.idExamen = idExamenGenerado;
+		this.correo = correo2;
 
 		this.listaPrivacidad = FXCollections.observableArrayList(aplicacion.cargarPrivacidad());
 

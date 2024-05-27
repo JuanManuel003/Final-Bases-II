@@ -95,7 +95,7 @@ public class Main extends Application {
 			Parent root = loader.load();
 
 			CrearExamenController controller = loader.getController();
-			controller.setMainApp(this, correo);
+			controller.setMainApp(this, correo, false);
 
 			Scene scene = new Scene(root);
 			this.primaryStage.setTitle("Examenes en linea");
@@ -108,7 +108,7 @@ public class Main extends Application {
 
 	}
 
-	public void cargarConfig(String correo) {
+	public void showCargarConfig(String correo) {
 		try {
 			// Carga del fxml de eleccion de modulo.
 			FXMLLoader loader = new FXMLLoader();
@@ -123,12 +123,12 @@ public class Main extends Application {
 			this.primaryStage.setScene(scene);
 			this.primaryStage.show();
 		} catch (IOException e) {
-			System.out.println("Error al inicial la vista de crear examen");
+			System.out.println("Error al inicial la vista de configuracion");
 			e.printStackTrace();
 		}
 	}
 
-	public void VolverCrearExamen(ActionEvent event, String correo) {
+	public void VolverCrearExamen(ActionEvent event, String correo, boolean bandera) {
 		try {
 			// Carga del fxml de eleccion de modulo.
 			FXMLLoader loader = new FXMLLoader();
@@ -138,7 +138,7 @@ public class Main extends Application {
 			// Obtener el controlador del login para pasarle el contexto de la
 			// aplicación si es necesario
 			CrearExamenController examenController = loader.getController();
-			examenController.setMainApp(this, correo);
+			examenController.setMainApp(this, correo, bandera);
 
 			Scene scene = new Scene(root);
 			this.primaryStage.setTitle("Examenes en linea");
@@ -151,7 +151,7 @@ public class Main extends Application {
 
 	}
 
-	public void CrearPreguntas(ActionEvent event, int idTemaExamen, int idDocente) {
+	public void showCrearPreguntas(ActionEvent event, int idTemaExamen, int idDocente, int idExamenGenerado, String correo) {
 		try {
 			// Carga del fxml de eleccion de modulo.
 			FXMLLoader loader = new FXMLLoader();
@@ -159,7 +159,7 @@ public class Main extends Application {
 			Parent root = loader.load();
 
 			CrearPreguntasController preguntasController = loader.getController();
-			preguntasController.setMainApp(this, idTemaExamen, idDocente);
+			preguntasController.setMainApp(this, idTemaExamen, idDocente, idExamenGenerado, correo);
 
 			Scene scene = new Scene(root);
 			this.primaryStage.setTitle("Examenes en linea");
@@ -216,14 +216,20 @@ public class Main extends Application {
 		return CrearPreguntaService.obtenerPrivacidad();
 	}
 
-	public int CrearPregunta(String descripcion, int porcentaje, int tipoPregunta, int idTema, int idPrivacidad, int idDocente) {
-		return CrearPreguntaService.CrearPregunta(descripcion, porcentaje, tipoPregunta, idTema, idPrivacidad, idDocente);
+	public int CrearPregunta(String descripcion, int porcentaje, int tipoPregunta, int idTema, int idPrivacidad,
+			int idDocente) {
+		return CrearPreguntaService.CrearPregunta(descripcion, porcentaje, tipoPregunta, idTema, idPrivacidad,
+				idDocente);
 	}
 
 	public void CrearRespuestas(String opc, String rb, int idPreguntaCreada) {
 		CrearPreguntaService.CrearRespuesta(opc, rb, idPreguntaCreada);
-		
+
 	}
 
+	public void actualizarEstadoExamen(int idExamen) {
+		CrearExamenService.actualizarEstadoExamen(idExamen);
+
+	}
 
 }

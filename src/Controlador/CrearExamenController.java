@@ -66,7 +66,7 @@ public class CrearExamenController {
 				if (idExamenGenerado != -1) {
 					System.out.println("Examen creado con ID: " + idExamenGenerado);
 
-					aplicacion.CrearPreguntas(event, idTemaExamen, docente.getId());
+					aplicacion.showCrearPreguntas(event, idTemaExamen, docente.getId(), idExamenGenerado, correo);
 				} else {
 					JOptionPane.showMessageDialog(null, "Error al crear el examen.");
 				}
@@ -128,7 +128,7 @@ public class CrearExamenController {
 		//cambiar el valor de cconfiguracion creada para validar que ya se creo
 		this.configCreada = true;
 		//crear ventana
-		aplicacion.cargarConfig(correo);
+		aplicacion.showCargarConfig(correo);
 	}
 
 	@FXML
@@ -156,10 +156,10 @@ public class CrearExamenController {
 		}
 	}
 
-	public void setMainApp(Main main, String correo) {
+	public void setMainApp(Main main, String correo, boolean bandera) {
 		this.aplicacion = main;
 		this.correo = correo;
-		this.configCreada  = true;
+		this.configCreada  = bandera;
 
 		// Inicializar listas
 		this.listTemaExamen = FXCollections.observableArrayList(aplicacion.cargarTemasExamen());

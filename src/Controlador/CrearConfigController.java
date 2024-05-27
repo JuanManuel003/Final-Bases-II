@@ -63,7 +63,8 @@ public class CrearConfigController {
             aplicacion.guardarConfig(5,intervaloTiempo, peso, umbral, fechaPresentacion, 0);
             
             //volver a la interfaz de crear examen luego de crear la configuracion
-            aplicacion.VolverCrearExamen(event, correo);
+            boolean bandera = true;
+            aplicacion.VolverCrearExamen(event, correo, bandera);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             // Manejo de error en caso de que los valores de hora o minutos no sean válidos
