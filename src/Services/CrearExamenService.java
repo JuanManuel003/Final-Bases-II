@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -136,74 +138,117 @@ public class CrearExamenService {
 
 		return ultimoId;
 	}
+	
+	public static int crearExamen(String nombreExamen, String descripcion, int idTemaExamen, int idDocente, int idConfig, int idGrupo) {
+        int newIdExamen = -1;
+        try (Connection conn = Conexion.getInstance().getConnection()) {
+            conn.setAutoCommit(false);  // Iniciar una transacción
 
-	public static int crearExamen(String nombreExamen, String descripcion, int idTemaExamen, int idDocente,
-	        int idConfig, int idGrupo) {
+            newIdExamen = insertarExamen(conn, nombreExamen, descripcion, idTemaExamen, idDocente, idConfig, idGrupo);
+            Timestamp fechaPresentacion = obtenerFechaPresentacion(conn, idConfig);
+            asignarExamenAAlumnos(conn, newIdExamen, idGrupo, fechaPresentacion);
 
-	    // La consulta SQL para obtener el último ID de la tabla examen
-	    String getLastIdQuery = "SELECT COALESCE(MAX(id), 0) FROM examen";
+            conn.commit();  // Confirmar la transacción
+            JOptionPane.showMessageDialog(null, "Examen creado exitosamente y asignado a los alumnos.");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            try (Connection conn = Conexion.getInstance().getConnection()) {
+                conn.rollback();  // Revertir la transacción en caso de error
+            } catch (SQLException | ClassNotFoundException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+        }
+        return newIdExamen;
+    }
+	
+	private static int insertarExamen(Connection conn, String nombreExamen, String descripcion, int idTemaExamen, int idDocente, int idConfig, int idGrupo) throws SQLException {
+        String getLastIdQuery = "SELECT COALESCE(MAX(id), 0) FROM examen";
+        String insertQuery = "INSERT INTO examen (id, nombre, descripcion, id_tema_examen, id_docente, id_configuracion, grupo_id, estado_examen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        int newIdExamen = -1;
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(getLastIdQuery); PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+            if (rs.next()) {
+                newIdExamen = rs.getInt(1) + 1;
+            }
+            pstmt.setInt(1, newIdExamen);
+            pstmt.setString(2, nombreExamen);
+            pstmt.setString(3, descripcion);
+            pstmt.setInt(4, idTemaExamen);
+            pstmt.setInt(5, idDocente);
+            pstmt.setInt(6, idConfig);
+            pstmt.setInt(7, idGrupo);
+            pstmt.setInt(8, 0);  // Estado examen por defecto: 0
+            pstmt.executeUpdate();
+        }
+        return newIdExamen;
+    }
+	
+	private static void asignarExamenAAlumnos(Connection conn, int newIdExamen, int idGrupo, Timestamp fechaPresentacion) throws SQLException {
+        String insertAlumnoExamenQuery = "INSERT INTO alumno_examen (examen_id, alumno_id, fechainicio) VALUES (?, ?, ?)";
+        List<Integer> listaAlumnos = obtenerAlumnosPorGrupo(conn, idGrupo);
+        try (PreparedStatement pstmtAlumnoExamen = conn.prepareStatement(insertAlumnoExamenQuery)) {
+            for (int alumnoId : listaAlumnos) {
+                pstmtAlumnoExamen.setInt(1, newIdExamen);
+                pstmtAlumnoExamen.setInt(2, alumnoId);
+                pstmtAlumnoExamen.setTimestamp(3, fechaPresentacion);
+                pstmtAlumnoExamen.addBatch();
+            }
+            pstmtAlumnoExamen.executeBatch();
+        }
+    }
+	
+	private static Timestamp obtenerFechaPresentacion(Connection conn, int idConfig) throws SQLException {
+        String getFechaPresentacionQuery = "SELECT fecha_presentacion FROM configuracion WHERE id = ?";
+        Timestamp fechaPresentacion = null;
+        try (PreparedStatement pstmtFechaPresentacion = conn.prepareStatement(getFechaPresentacionQuery)) {
+            pstmtFechaPresentacion.setInt(1, idConfig);
+            try (ResultSet rsFechaPresentacion = pstmtFechaPresentacion.executeQuery()) {
+                if (rsFechaPresentacion.next()) {
+                    fechaPresentacion = rsFechaPresentacion.getTimestamp("fecha_presentacion");
+                }
+            }
+        }
+        return fechaPresentacion;
+    }
 
-	    // La consulta SQL para insertar un nuevo examen
-	    String insertQuery = "INSERT INTO examen (id, nombre, descripcion, id_tema_examen, id_docente, id_configuracion, grupo_id, estado_examen) "
-	            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-	    // Variable para almacenar el ID generado
-	    int newIdExamen = -1;
-
-	    // Establecer la conexión y ejecutar la consulta
-	    try (Connection conn = Conexion.getInstance().getConnection();
-	         Statement stmt = conn.createStatement();
-	         ResultSet rs = stmt.executeQuery(getLastIdQuery);
-	         PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
-
-	        // Obtener el último ID de la tabla examen y sumarle 1
-	        if (rs.next()) {
-	            newIdExamen = rs.getInt(1) + 1;
-	        }
-
-	        // Asignar valores a los parámetros del PreparedStatement
-	        pstmt.setInt(1, newIdExamen);
-	        pstmt.setString(2, nombreExamen);
-	        pstmt.setString(3, descripcion);
-	        pstmt.setInt(4, idTemaExamen);
-	        pstmt.setInt(5, idDocente);
-	        pstmt.setInt(6, idConfig);
-	        pstmt.setInt(7, idGrupo);
-	        pstmt.setInt(8, 0); // Estado examen por defecto: 0
-
-	        // Ejecutar la consulta
-	        pstmt.executeUpdate();
-	        
-	        JOptionPane.showMessageDialog(null, "Examen creado exitosamente: " + pstmt.executeUpdate());
-
-	    } catch (SQLException | ClassNotFoundException e) {
-	        e.printStackTrace();
-	    }
-
-	    return newIdExamen;
+	private static List<Integer> obtenerAlumnosPorGrupo(Connection conn, int idGrupo) throws SQLException {
+        String query = "SELECT alumno_id FROM alumno_grupo WHERE grupo_id = ?";
+        List<Integer> listaAlumnos = new ArrayList<>();
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, idGrupo);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    listaAlumnos.add(rs.getInt("alumno_id"));
+                }
+            }
+        }
+        return listaAlumnos;
+    }
+	
+	//metodo para guardar los datos en la tabla preguntas alumno
+	public static void crearPreguntasAlumno(){
+		
 	}
 
 	public static void actualizarEstadoExamen(int idExamen) {
-	    // Consulta SQL para actualizar el estado del examen
-	    String updateQuery = "UPDATE examen SET estado_examen = ? WHERE id = ?";
+		// Consulta SQL para actualizar el estado del examen
+		String updateQuery = "UPDATE examen SET estado_examen = ? WHERE id = ?";
 
-	    // Establecer la conexión y ejecutar la consulta
-	    try (Connection conn = Conexion.getInstance().getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+		// Establecer la conexión y ejecutar la consulta
+		try (Connection conn = Conexion.getInstance().getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
 
-	        // Asignar valores a los parámetros del PreparedStatement
-	        pstmt.setInt(1, 2); // Nuevo estado del examen: 2
-	        pstmt.setInt(2, idExamen);
+			// Asignar valores a los parámetros del PreparedStatement
+			pstmt.setInt(1, 2); // Nuevo estado del examen: 2
+			pstmt.setInt(2, idExamen);
 
-	        // Ejecutar la consulta
-	        pstmt.executeUpdate();
-	        
-	        JOptionPane.showMessageDialog(null, "Preguntas generadas exitosamente: " + pstmt.executeUpdate());
-	        System.out.println("Estado del examen actualizado");
-	    } catch (SQLException | ClassNotFoundException e) {
-	        e.printStackTrace();
-	    }
+			// Ejecutar la consulta
+			pstmt.executeUpdate();
+
+			JOptionPane.showMessageDialog(null, "Preguntas generadas exitosamente: " + pstmt.executeUpdate());
+			System.out.println("Estado del examen actualizado");
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
-
 
 }

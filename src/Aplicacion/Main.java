@@ -217,9 +217,9 @@ public class Main extends Application {
 	}
 
 	public int CrearPregunta(String descripcion, int porcentaje, int tipoPregunta, int idTema, int idPrivacidad,
-			int idDocente) {
+			int idDocente, int idExamen) {
 		return CrearPreguntaService.CrearPregunta(descripcion, porcentaje, tipoPregunta, idTema, idPrivacidad,
-				idDocente);
+				idDocente, idExamen);
 	}
 
 	public void CrearRespuestas(String opc, String rb, int idPreguntaCreada) {
@@ -230,6 +230,10 @@ public class Main extends Application {
 	public void actualizarEstadoExamen(int idExamen) {
 		CrearExamenService.actualizarEstadoExamen(idExamen);
 
+	}
+
+	public int obtenerNumeroPreguntasExamen(int idExamen) {
+		return CrearPreguntaService.obtenerNumPreguntas(idExamen);
 	}
 
 }

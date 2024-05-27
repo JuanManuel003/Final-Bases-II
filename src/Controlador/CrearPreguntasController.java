@@ -49,23 +49,31 @@ public class CrearPreguntasController {
 	private ObservableList<PrivacidadPregunta> listaPrivacidad;
 	private int idPreguntaCreada;
 	private int idExamen;
+	private int numeroPreguntas;
 
 	// Event Listener on Button[#idBtnCrearPregunta].onAction
 	@FXML
 	public void CrearPregunta(ActionEvent event) {
-
+		
 		if (camposRellenos()) {
-			// Cambiar el valor de la variable para indicar que la pregunta fue
-			// creada
-			preguntaCreada = true;
+			
+			numeroPreguntas = aplicacion.obtenerNumeroPreguntasExamen(idExamen);
+			
+			if(numeroPreguntas < 5){
+				// Cambiar el valor de la variable para indicar que la pregunta fue
+				// creada
+				preguntaCreada = true;
 
-			String descripcion = this.txtDescripcion.getText();
-			int porcentaje = Integer.parseInt(this.txtPorcentaje.getText());
-			int idPrivacidad = obtenerIdPrivacidadSeleccionado();
+				String descripcion = this.txtDescripcion.getText();
+				int porcentaje = Integer.parseInt(this.txtPorcentaje.getText());
+				int idPrivacidad = obtenerIdPrivacidadSeleccionado();
 
-			idPreguntaCreada = aplicacion.CrearPregunta(descripcion, porcentaje, 1, idTema, idPrivacidad, idDocente);
+				idPreguntaCreada = aplicacion.CrearPregunta(descripcion, porcentaje, 1, idTema, idPrivacidad, idDocente, idExamen);
 
-			JOptionPane.showMessageDialog(null, "Pregunta creada, crea las opciones de la pregunta");
+				JOptionPane.showMessageDialog(null, "Pregunta creada, crea las opciones de la pregunta");
+			}else{
+				JOptionPane.showMessageDialog(null, "Ya tiene el maximo de preguntas creadas");
+			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Llenar todos los campos necesarios para crear pregunta");
 		}
@@ -127,9 +135,14 @@ public class CrearPreguntasController {
 	
 	@FXML
     void CrearPreguntaAleatoria(ActionEvent event) {
-		aplicacion.actualizarEstadoExamen(idExamen);
+		if(numeroPreguntas < 5){
+			aplicacion.actualizarEstadoExamen(idExamen);
+			
+			aplicacion.showCrearExamen(correo);
+		}else{
+			JOptionPane.showMessageDialog(null, "Ya tiene el maximo de preguntas creadas");
+		}
 		
-		aplicacion.showCrearExamen(correo);
     }
 
 	private boolean camposRellenosRespuesta() {
@@ -180,8 +193,12 @@ public class CrearPreguntasController {
     
     @FXML
     void Volver(ActionEvent event) {
-    	//validar 5 preguntas
-    	aplicacion.showCrearExamen(correo);
+    	if(numeroPreguntas <= 4){
+    		JOptionPane.showMessageDialog(null, "Aun no tiene el maximo de preguntas creadas");
+    	}else{
+    		aplicacion.showCrearExamen(correo);
+    	}
+    	
     }
 
 	@FXML
